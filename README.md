@@ -1,3 +1,3 @@
 # 2143-OOP-MAO
-Zhiqi
-Maozhiqimao@qq.com
+Zhiqi Mao\n
+zhiqimao@qq.com

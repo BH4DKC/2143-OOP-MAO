@@ -22,6 +22,11 @@ def remove_all(el, lst):
     Usage: remove_all(1, x)
     Would result in: [3, 2, 5, 7]
     """
-    for i in range(len(lst)):
-        if lst[i] == el:
-            lst.remove(lst[i])
+    i = 0
+    number = len(lst)
+    while i<number:
+      if lst[i]==el:
+        lst.remove(lst[i])
+        i=i-1
+        number=number-1
+      i = i+1

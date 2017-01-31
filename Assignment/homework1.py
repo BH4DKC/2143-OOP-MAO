@@ -33,8 +33,7 @@ def remove_all(el, lst):
 
 # Part C:
 def add_this_many(x, y, lst):
-  """ 
-  Adds y to the end of lst the number of times x occurs in lst. 
+  """ Adds y to the end of lst the number of times x occurs in lst. 
   Given: lst = [1, 2, 4, 2, 1]
   Usage: add_this_many(1, 5, lst)
   Results in: [1, 2, 4, 2, 1, 5, 5]
@@ -56,8 +55,7 @@ g: [3, 5, 2, 4, 1, 3]
 
 # Part E:
 def reverse(lst):
-  """ 
-  Reverses lst in place. 
+  """ Reverses lst in place. 
   Given: x = [3, 2, 4, 5, 1] 
   Usage: reverse(x)
   Results: [1, 5, 4, 2, 3]
@@ -68,8 +66,7 @@ def reverse(lst):
 
 # Part F:
 def rotate(lst, k):
-  """
-  Return a new list, with the same elements of lst, rotated to the right k.
+  """ Return a new list, with the same elements of lst, rotated to the right k.
   Given: x = [1, 2, 3, 4, 5]
   Usage: rotate(x, 3)
   Results: [3, 4, 5, 1, 2]
@@ -91,13 +88,29 @@ g:{('eli manning', 'giants'): 5, 'tom brady': 3, 3: 'cat', ('steelers', '49ers')
 
 #Part I:
 def replace_all(d, x, y):
-  """
-  Replaces all values of x with y. 
+  """Replaces all values of x with y. 
   Given: d = {1: {2:3, 3:4}, 2:{4:4, 5:3}} 
   Usage: replace_all(d,3,1)
   Results: {1: {2: 1, 3: 4}, 2: {4: 4, 5: 1}} 
   """
+  for key,val in d.items():
+    if type(val)==type(dict()):
+      replace_all(val, x, y)
+    else:
+      if val==x:
+        d[key]=y
 
   
-
-  
+#Part J:
+def rm(d, x):
+  """Removes all pairs with value x. 
+  Given:  d = {1:2, 2:3, 3:2, 4:3}
+  Usage:  rm(d,2)
+  Results: {2:3, 4:3}
+  """
+  delete=dict()
+  for key,val in d.items():
+    if val == x:
+      delete[key]=val
+  for key,val in delete.items():
+    del d[key]

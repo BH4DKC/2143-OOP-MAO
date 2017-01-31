@@ -1,4 +1,3 @@
-'''python
 """
 Name: Zhiqi Mao
 Email: zhiqimao@qq.com

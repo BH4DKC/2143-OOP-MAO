@@ -1,4 +1,4 @@
-'''python
+
 """
 Name: Zhiqi Mao
 Email: zhiqimao@qq.com
@@ -389,4 +389,3 @@ if choose == 1:
 else:
     Game.deal(Deck())
     Game.war(Deck())
-'''

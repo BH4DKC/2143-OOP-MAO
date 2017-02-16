@@ -389,4 +389,4 @@ if choose == 1:
 else:
     Game.deal(Deck())
     Game.war(Deck())
-'''python
+'''

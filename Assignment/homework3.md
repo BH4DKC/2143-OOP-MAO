@@ -1,4 +1,5 @@
 ```python
+
 """
 Name: Zhiqi Mao
 Email: zhiqimao@qq.com
@@ -221,7 +222,7 @@ class Player(list):
         round=0
         hcount=26
         ccount=26
-        while H and C:
+        while hcount and ccount:
             player1=H._list.pop(0)
             player2=C._list.pop(0)
             print('Player 1 Card: \n', player1)
@@ -242,6 +243,7 @@ class Player(list):
                 round+=1
             else:
                 draw=Hand()
+                round+=1
                 while player1 == player2:
                     print('Tie, draw one card, and flip the next card')
                     time.sleep(3)
@@ -303,7 +305,7 @@ class Game(list):
         round=0
         hcount=26
         ccount=26
-        while H and C:
+        while hcount and ccount:
             player1=H._list.pop(0)
             player2=C._list.pop(0)
             print('Player 1 Card: \n', player1)
@@ -324,8 +326,10 @@ class Game(list):
                 round+=1
             else:
                 draw=Hand()
+                round+=1
                 while player1 == player2:
                     print('Tie, draw one card, and flip the next card')
+                    time.sleep(3)
                     print(HIDDEN_CARD,HIDDEN_CARD)
                     draw.add(player1)
                     draw.add(player2)
@@ -353,40 +357,49 @@ class Game(list):
                         C.add(draw._list.pop(0))
                         ccount = ccount+1
                         hcount = hcount-1
-                        print('This is round ', round)
-                print('Player 1 has ',hcount,'card(s)')
-                print('Player 2 has ',ccount,'card(s)')
-                time.sleep(3)
+            print('This is round ', round)
+            print('Player 1 has ',hcount,'card(s)')
+            print('Player 2 has ',ccount,'card(s)')
+            time.sleep(3)
 
             if hcount == 0:
-                print('Congratulations for Player 2 won the game')
+                print('Congratulations for Player 1 winning the game')
                 os.system("pause")
                 sys.exit(0)
             elif ccount ==0:
-                print('Congratulations for Player 1 won the game')
+                print('Congratulations for Player 2 winning the game')
                 os.system("pause")
                 sys.exit(0)
 
 choose = 0
-while choose == 0:
+while choose != '1' and choose != '2':
+    # I upgrade my python to version 3.6 and they took out raw_input function, end up using strings
     print('Please select game type by typing the number in front: \n 1. Single Player \n 2. Double Player')
     choose = input('Enter your choice: ')
-    if choose == 1:
+    if choose == '1':
         print('Entering single player mode, please wait while game is loading...')
         time.sleep(5)
-    elif choose ==2:
+    elif choose =='2':
         print('Entering double player mode, please wait while game is loading...')
         time.sleep(5)
     else:
-        choose = 0
         print('Choice was invalid, please input 1 or 2')
         print('Please select game type: \n 1. Single Player \n 2. Double Player')
         choose = input('Enter your choice: ')
 
-if choose == 1:
+if choose == '1':
     Player.deal(Deck())
+    print('Dealing Cards...')
+    time.sleep(3)
+    print('Game Ready, press Enter to start')
+    os.system('pause')
     Player.war(Deck())
 else:
     Game.deal(Deck())
+    print('Dealing Cards...')
+    time.sleep(3)
+    print('Game Ready, press Enter to start')
+    os.system('pause')
     Game.war(Deck())
+
 ```

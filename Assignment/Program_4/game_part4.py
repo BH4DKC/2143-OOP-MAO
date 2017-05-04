@@ -65,10 +65,12 @@ class Player(object):
         self.Strategies = {
                 'Target_Score':0,
                 'Target_Rolls':0,
-                'Sprint_To_Finish':0,
+                'SprintToFinish':0,
                 'Mimic_Opponent':0,
                 'Situational':0,
-                'Random':0
+                'Random':0,
+                'Aggressive':0,
+                'Cautious':0,
             }
         self.TS=targetscore     # Pass target score
         self.Strategies[strategy[0]] = strategy[1]
@@ -144,20 +146,26 @@ class Player(object):
             int: max rolls 
         @Returns: int: total
         """
-        Score = 0
-        NumRolls = 0
+        
+        Score=0
+        NumRolls=0
         if self.Strategy == 'Random':
             Score,NumRolls = self.RandomRoll()
         elif self.Strategy == 'Aggressive':
             Score,NumRolls = self.Aggressive()
         elif self.Strategy == 'Cautious':
-            pass
+            Score,NumRolls = self.Cautious()
         elif self.Strategy == 'Robust':
             pass
         elif self.Strategy == 'CopyCat':
             pass
         elif self.Strategy == 'SprintToFinish':
+          if self.TotalScore <=75:
+            self.Strategies['Random']=6
+            Score,NumRolls = self.RandomRoll()
+          else:
             Score,NumRolls = self.SprintToFinish()
+          self.Strategy == self.SetStrategy('SprintToFinish',75)
         
         self.TotalScore += Score
         self.LastScore = Score
@@ -174,7 +182,7 @@ class Player(object):
                 break
             Score += roll
             if Score+self.TotalScore >=self.TS: # check see if passed target score
-              break                             # if yes, then quit rolling
+              return (Score,NumRolls)           # if yes, then quit rolling
         
         return (Score,NumRolls)
 
@@ -186,10 +194,10 @@ class Player(object):
             NumRolls += 1
             roll = self.pig.Roll()
             if roll == 0:
-                break
+                return (0,0)
             Score += roll
             if Score+self.TotalScore >=self.TS: # check see if passed target score
-              break                             # if yes, then quit rolling
+              return (Score,NumRolls)           # if yes, then quit rolling
         
         return (Score,NumRolls)
         
@@ -200,10 +208,10 @@ class Player(object):
             NumRolls += 1
             roll = self.pig.Roll()
             if roll == 0:
-                break
+              return (0,0)
             Score += roll
             if Score+self.TotalScore >=self.TS: # check see if passed target score
-              break                             # if yes, then quit rolling
+              return (Score,NumRolls)           # if yes, then quit rolling
         
         return (Score,NumRolls)
 
@@ -220,7 +228,7 @@ class Player(object):
           NumRolls += 1
           roll = self.pig.Roll()
           if roll == 0:
-              break
+              return (0,0)
           Score += roll
           
         return (Score,NumRolls)
@@ -262,7 +270,7 @@ class Game(object):
             string += obj.__str__() + "\n"
         return string
         
-
+      
     def AddPlayers(self,players):
         """
         @Method: AddPlayers
@@ -281,7 +289,6 @@ class Game(object):
             for p in players:
                 self.Players[p.Name] = p
                 p.TS=self.TargetScore
-                
                     
      
     def StartGame(self):
@@ -311,6 +318,7 @@ class Game(object):
             if PlayerObj.TotalScore >= self.TargetScore:
                 self.WinnerName = PlayerObj.Name
                 self.WinnerScore = PlayerObj.TotalScore
+                self.WinnerStrategy=PlayerObj.Strategy
                 return True
         self.WinnerName = None
         return False
@@ -343,21 +351,39 @@ class Game(object):
 
 def main():
 
-    p1 = Player(name='ann',strategy=('SprintToFinish',6))
-    p2 = Player(name='bob',strategy=('Random',6))
-    p3 = Player(name='sue',strategy=('Aggressive',6))
-    p4 = Player(name='dax',strategy=('Randonm',6))
-
+    p1 = Player(name='ann',strategy=('Random',7))
+    p2 = Player(name='bob',strategy=('Aggressive',9))
+    p3 = Player(name='sue',strategy=('SprintToFinish',75))
+    p4 = Player(name='dax',strategy=('Cautious',4))
     
     AllPlayers = [p1,p2,p3,p4]
     
+    w1 = 0
+    w2 = 0
+    w3 = 0 
+    w4 = 0
     # Param values to initialize a pig game instance
     kwargs = {'num_dice':1,'random_roles':9,'target_score':100,'players':AllPlayers}
-
-    g = Game(**kwargs)
     
-    print(g)
-    print(g.WinnerName, 'has reached ', g.WinnerScore, ' points and is stopping.')
-    
+    for i in range(1000):
+      g= Game(**kwargs)
+      
+      print(g)
+      print(g.WinnerName, 'has reached ', g.WinnerScore, ' points and is stopping. His/Her strategy is', g.WinnerStrategy)
+      
+      # Winning Strategy Counts
+      if g.WinnerStrategy == 'Random':
+        w1 += 1
+      elif g.WinnerStrategy == 'Aggressive':
+        w2 += 1
+      elif g.WinnerStrategy == 'SprintToFinish':
+        w3 += 1
+      elif g.WinnerStrategy == 'Cautious':
+        w4 += 1
+    print ('  Name      ','Strategy          ','percent')
+    print ('  Ann       ','Random            ', w1/1000)
+    print ('  Bob       ','Aggressive        ', w2/1000)
+    print ('  Sue       ','Sprint To Finish  ', w3/1000)
+    print ('  Dax       ','Cautious          ', w4/1000)
     
 main()

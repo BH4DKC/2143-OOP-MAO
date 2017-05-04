@@ -147,7 +147,7 @@ class Player(object):
         if self.Strategy == 'Random':
             Score,NumRolls = self.RandomRoll()
         elif self.Strategy == 'Aggressive':
-            pass
+            Score,NumRolls = self.Aggressive()
         elif self.Strategy == 'Cautious':
             pass
         elif self.Strategy == 'Robust':
@@ -178,10 +178,32 @@ class Player(object):
 
             
     def Aggressive(self):
-        pass
+        Score = 0
+        NumRolls = 0
+        while NumRolls <= 9 or Score <= 35:
+            NumRolls += 1
+            roll = self.pig.Roll()
+            if roll == 0:
+                break
+            Score += roll
+            if Score+self.TotalScore >=self.TS: # check see if passed target score
+              break                             # if yes, then quit rolling
+        
+        return (Score,NumRolls)
         
     def Cautious(self):
-        pass
+        Score = 0
+        NumRolls = 0
+        while NumRolls <= 4 and Score <= 14:
+            NumRolls += 1
+            roll = self.pig.Roll()
+            if roll == 0:
+                break
+            Score += roll
+            if Score+self.TotalScore >=self.TS: # check see if passed target score
+              break                             # if yes, then quit rolling
+        
+        return (Score,NumRolls)
 
     def Robust(self):
         pass

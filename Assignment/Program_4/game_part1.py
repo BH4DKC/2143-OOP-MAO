@@ -1,5 +1,3 @@
-```python
-
 import random
 
 
@@ -324,4 +322,3 @@ def main():
     
     
 main()
-```

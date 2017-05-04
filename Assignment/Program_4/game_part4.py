@@ -53,7 +53,7 @@ class Pig(object):
 ##############################################################################
 
 class Player(object):
-    def __init__(self,name,num_dice=1,strategy=('Random',7), targetscore=0):
+    def __init__(self,name='',num_dice=1,strategy=('Random',7), targetscore=0):
         self.Name = name        # My name
         self.TotalScore = 0     # Total score
         self.LastScore = 0      # Score on last turn
@@ -144,6 +144,8 @@ class Player(object):
             int: max rolls 
         @Returns: int: total
         """
+        Score = 0
+        NumRolls = 0
         if self.Strategy == 'Random':
             Score,NumRolls = self.RandomRoll()
         elif self.Strategy == 'Aggressive':
@@ -341,10 +343,11 @@ class Game(object):
 
 def main():
 
-    p1 = Player('ann')
-    p2 = Player('bob')
-    p3 = Player('sue')
-    p4 = Player('dax')
+    p1 = Player(name='ann',strategy=('SprintToFinish',6))
+    p2 = Player(name='bob',strategy=('Random',6))
+    p3 = Player(name='sue',strategy=('Aggressive',6))
+    p4 = Player(name='dax',strategy=('Randonm',6))
+
     
     AllPlayers = [p1,p2,p3,p4]
     

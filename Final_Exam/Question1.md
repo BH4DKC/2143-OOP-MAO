@@ -31,8 +31,4 @@ def dirReduc(direction):
                 final.remove('EAST')
     return final
 
-
-print(dirReduc(["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH"]))
-
-
 ```

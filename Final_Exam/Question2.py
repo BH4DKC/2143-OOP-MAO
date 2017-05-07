@@ -24,4 +24,3 @@ def tickets(given):
             return('NO')
     return ('YES')
 
-print(tickets([25, 25, 50]))

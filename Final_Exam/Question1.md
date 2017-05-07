@@ -1,5 +1,4 @@
 ```Python
-
 def dirReduc(direction):
     """
     @Function: dirReduc
@@ -8,7 +7,7 @@ def dirReduc(direction):
     @Returns: string with the reduced direction
     """
     final=[] # intial list of final direction
-    for i in direction:
+    for i in direction: #take each direction and reduce it down, if possible
         if i == 'NORTH':
             if 'SOUTH' not in final:
                 final.append(i)

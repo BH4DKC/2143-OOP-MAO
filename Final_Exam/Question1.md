@@ -1,7 +1,13 @@
 ```Python
 
 def dirReduc(direction):
-    final=[]
+    """
+    @Function: dirReduc
+    @Description:
+        Reduce unnesseary information with a given list of directions
+    @Returns: string with the reduced direction
+    """
+    final=[] # intial list of final direction
     for i in direction:
         if i == 'NORTH':
             if 'SOUTH' not in final:
@@ -26,6 +32,7 @@ def dirReduc(direction):
     return final
 
 
+print(dirReduc(["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH"]))
 
 
 ```

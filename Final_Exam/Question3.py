@@ -35,7 +35,7 @@ class Cube(Square):
     def __init__(self,sl):
         Square.__init__(self,sl,)
         self.height=sl
-    def surfaceArea(self):
-        return 6 * Square.area(self)
+    def surfaceArea(self): # returns the volume of the cube
+        return self.height * Square.area(self)
     def perimeter(self):
         return 3 * Square.perimeter(self)

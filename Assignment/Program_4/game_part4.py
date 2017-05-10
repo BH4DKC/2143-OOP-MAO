@@ -343,6 +343,20 @@ class Game(object):
         """   
         for name,PlayerObj in self.Players.items():
             PlayerObj.AddOpponents(self.Players.values())
+            
+            
+    def reset(self):
+      """
+      @Method: reset
+      @Description: reset game status 
+      @Params:None
+      @Returns: None
+      """   
+      self.Players = {}  
+      self.NumDice = None          
+      self.RandomRolls = None   
+      self.TargetScore = None  
+      self.WinnerName = None 
 
 ##############################################################################
 ##############################################################################
@@ -351,22 +365,23 @@ class Game(object):
 
 def main():
 
-    p1 = Player(name='ann',strategy=('Random',7))
-    p2 = Player(name='bob',strategy=('Aggressive',9))
-    p3 = Player(name='sue',strategy=('SprintToFinish',75))
-    p4 = Player(name='dax',strategy=('Cautious',4))
-    
-    AllPlayers = [p1,p2,p3,p4]
-    
     w1 = 0
     w2 = 0
     w3 = 0 
     w4 = 0
-    # Param values to initialize a pig game instance
-    kwargs = {'num_dice':1,'random_roles':9,'target_score':100,'players':AllPlayers}
+
     
     for i in range(1000):
+      p1 = Player(name='ann',strategy=('Random',7))
+      p2 = Player(name='bob',strategy=('Aggressive',9))
+      p3 = Player(name='sue',strategy=('SprintToFinish',75))
+      p4 = Player(name='dax',strategy=('Cautious',4))
+      AllPlayers = [p1,p2,p3,p4]
+      
+      # Param values to initialize a pig game instance
+      kwargs = {'num_dice':1,'random_roles':9,'target_score':100,'players':AllPlayers}
       g= Game(**kwargs)
+      
       
       print(g)
       print(g.WinnerName, 'has reached ', g.WinnerScore, ' points and is stopping. His/Her strategy is', g.WinnerStrategy)
@@ -380,6 +395,8 @@ def main():
         w3 += 1
       elif g.WinnerStrategy == 'Cautious':
         w4 += 1
+        
+      g.reset() # calls reset function to reset game status
     print ('  Name      ','Strategy          ','percent')
     print ('  Ann       ','Random            ', w1/1000)
     print ('  Bob       ','Aggressive        ', w2/1000)
